@@ -50,7 +50,9 @@
         </form>
 
         <p class="text-center text-sm text-gray-500 mt-4">
-            Belum punya akun? <a href="#" class="text-blue-600 hover:underline">Daftar</a>
+            Belum punya akun? 
+            <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Daftar</a>
+
         </p>
     </div>
 
