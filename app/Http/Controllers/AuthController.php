@@ -24,3 +24,26 @@ class AuthController extends Controller
 
         return back()->with('error', 'Email atau password salah!');
     }
+
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function registerProses(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('login')->with('success', 'Akun berhasil dibuat, silakan login!');
+    }
+}
