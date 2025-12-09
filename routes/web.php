@@ -19,3 +19,12 @@ Route::get('/', function () {
 Route::get('/', function () {
     return view('profile');
 });
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login-proses', [AuthController::class, 'prosesLogin'])->name('login.proses');
+
+Route::get('/beranda', function () {
+    return view('beranda');
+})->name('beranda');
+
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'registerProses'])->name('register.proses');
