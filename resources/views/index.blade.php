@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
+
     <!-- Navbar -->
     <nav class="bg-white shadow-md sticky top-0 z-10">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -20,12 +21,11 @@
                 <a href="#" class="hover:text-blue-600">Ranking</a>
                 <a href="{{ route('profile') }}" class="hover:text-blue-600">Profile</a>
                 <a href="{{ route('login') }}" class="hover:text-blue-600">Masuk</a>
-
             </div>
         </div>
     </nav>
 
-    <!-- Hero / Search Section -->
+    <!-- Hero -->
     <section class="bg-blue-50 py-12">
         <div class="max-w-3xl mx-auto text-center">
             <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-4">Temukan Jawaban Terbaik di KRFSM!</h1>
@@ -37,28 +37,35 @@
         </div>
     </section>
 
-    <!-- Main Content -->
+    <!-- Main -->
     <main class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-6">
-        <!-- Question Feed -->
+
+        <!-- Feed -->
         <div class="md:col-span-2 space-y-6">
             <h2 class="text-xl font-semibold text-gray-700 mb-4">Pertanyaan Terbaru</h2>
 
-            <!-- Contoh Card Pertanyaan -->
-            @foreach ([
-                ['name' => 'Rina', 'question' => 'Apa perbedaan antara fotosintesis dan respirasi tumbuhan?', 'answers' => 4],
-                ['name' => 'Budi', 'question' => 'Jelaskan pengaruh revolusi industri terhadap kehidupan manusia modern.', 'answers' => 2],
-                ['name' => 'Sinta', 'question' => 'Apa fungsi utama dari sistem operasi komputer?', 'answers' => 5],
-            ] as $item)
+            @foreach ($questions as $item)
             <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-md transition">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-gray-700 font-medium mb-2">{{ $item['question'] }}</p>
-                        <p class="text-sm text-gray-500">Ditanyakan oleh <span class="font-semibold text-gray-700">{{ $item['name'] }}</span></p>
+                        <p class="text-gray-700 font-medium mb-2">{{ $item->question }}</p>
+                        <p class="text-sm text-gray-500">
+                            Ditanyakan oleh <span class="font-semibold text-gray-700">{{ $item->name }}</span>
+                        </p>
                     </div>
-                    <span class="bg-blue-100 text-blue-600 text-xs px-3 py-1 rounded-full">{{ $item['answers'] }} Jawaban</span>
                 </div>
-                <div class="mt-4 flex justify-end space-x-2">
-                    <button class="text-sm text-blue-600 hover:underline">Lihat Jawaban</button>
+
+                {{-- Tampilkan jawaban --}}
+                @if($item->answers)
+                <div class="mt-4 bg-green-50 border border-green-300 text-green-700 p-3 rounded">
+                    <b>Jawaban:</b> {{ $item->answers }}
+                </div>
+                @else
+                <p class="mt-3 text-red-500 italic">Belum ada jawaban</p>
+                @endif
+
+                <div class="mt-4 flex justify-end space-x-3">
+                    <button class="text-sm text-blue-600 hover:underline">Lihat Detail</button>
                     <button class="text-sm text-gray-600 hover:underline">Jawab</button>
                 </div>
             </div>
@@ -82,11 +89,12 @@
                 <button class="bg-white text-blue-700 font-semibold px-4 py-2 rounded-full hover:bg-blue-50">Tanya Sekarang</button>
             </div>
         </aside>
+
     </main>
 
-    <!-- Footer -->
     <footer class="bg-white text-center text-sm py-6 text-gray-500 border-t">
         © 2025 <span class="font-semibold text-blue-600">KRFSM</span>. Dibuat dengan ❤️ menggunakan Laravel 10 & Tailwind CSS.
     </footer>
+
 </body>
 </html>
