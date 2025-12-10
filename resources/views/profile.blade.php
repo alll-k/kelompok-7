@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    @if (file_exists(public_path('build')))
-        @vite(['resources/css/app.css','resources/js/app.js'])
-    @else
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize/modern-normalize.css">
-    @endif
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         :root{--card-bg:#fff;--muted:#6b7280}
         body{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;margin:0;background:#f3f4f6}
@@ -30,19 +28,40 @@
     </style>
 </head>
 <body>
+
+    <!--NAVBAR DARI INDEX (DITAMBAHKAN DI SINI) -->
+    <nav class="bg-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="KRFSM Logo" class="h-8">
+                <span class="font-semibold text-xl text-blue-600">KRFSM</span>
+            </div>
+
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="/" class="hover:text-blue-600">Beranda</a>
+                <a href="#" class="hover:text-blue-600">Topik</a>
+                <a href="#" class="hover:text-blue-600">Ranking</a>
+                <a href="{{ route('profile') }}" class="hover:text-blue-600 font-semibold text-blue-600">Profile</a>
+                <a href="{{ route('login') }}" class="hover:text-blue-600">Masuk</a>
+            </div>
+        </div>
+    </nav>
+    <!-- 🔵 NAVBAR SELESAI -->
+
     @php
         $user = $user ?? auth()->user();
+        $initials = isset($user->name)
+            ? collect(explode(' ', $user->name))->map(fn($p)=>substr($p,0,1))->take(2)->join('')
+            : 'U';
     @endphp
 
     <div class="container">
         <div class="card">
             <div class="avatar">
                 @if(isset($user) && !empty($user->avatar))
-                    <img src="{{ asset('storage/'.$user->avatar) }}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:999px;">
+                    <img src="{{ asset('storage/'.$user->avatar) }}" alt="avatar"
+                         style="width:100%;height:100%;object-fit:cover;border-radius:999px;">
                 @else
-                    @php
-                        $initials = isset($user->name) ? collect(explode(' ', $user->name))->map(fn($p)=>substr($p,0,1))->take(2)->join('') : 'U';
-                    @endphp
                     <span style="font-size:32px">{{ strtoupper($initials) }}</span>
                 @endif
             </div>
@@ -57,31 +76,16 @@
                         <div class="n">{{ $user->posts_count ?? 0 }}</div>
                         <div class="muted">Posts</div>
                     </div>
-                    <div class="stat">
-                        <div class="n">{{ $user->followers_count ?? 0 }}</div>
-                        <div class="muted">Followers</div>
-                    </div>
-                    <div class="stat">
-                        <div class="n">{{ $user->following_count ?? 0 }}</div>
-                        <div class="muted">Following</div>
-                    </div>
                 </div>
             </div>
 
             <div class="actions">
-                <a href="{{ Route::has('profile') ? route('profile') : url('/profile/edit') }}" class="btn btn-edit">Edit Profile</a>
-                <a href="mailto:{{ $user->email ?? '' }}" class="btn btn-message">Message</a>
+                <a href="#" class="btn btn-edit">Edit Profile</a>
+                <a href="{{ 'mailto:' . ($user->email ?? '') }}" class="btn btn-message">Message</a>
+
             </div>
         </div>
     </div>
 
-    @php
-        // helper to check route existence without throwing
-        if (! function_exists('route_exists')) {
-            function route_exists($name) {
-                try { return \Illuminate\Support\Facades\Route::has($name); } catch (\Throwable $e) { return false; }
-            }
-        }
-    @endphp
 </body>
 </html>
