@@ -35,4 +35,33 @@
                             @enderror
                         </div>
 
-                        
+     <div class="mb-3">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                            @error('password')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Konfirmasi Password</label>
+                            <input type="password" name="password_confirmation" class="form-control" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Daftar</button>
+
+                        <p class="mt-3 text-center">
+                            Sudah punya akun? <a href="{{ route('login') }}">Login</a>
+                        </p>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>                   
