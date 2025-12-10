@@ -76,14 +76,6 @@
                         <div class="n">{{ $user->posts_count ?? 0 }}</div>
                         <div class="muted">Posts</div>
                     </div>
-                    <div class="stat">
-                        <div class="n">{{ $user->followers_count ?? 0 }}</div>
-                        <div class="muted">Followers</div>
-                    </div>
-                    <div class="stat">
-                        <div class="n">{{ $user->following_count ?? 0 }}</div>
-                        <div class="muted">Following</div>
-                    </div>
                 </div>
             </div>
 
