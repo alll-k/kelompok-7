@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
     public function login()
     {
-        return view('login'); // pastikan file resources/views/login.blade.php ada
+        return view('login');
     }
 
     public function prosesLogin(Request $request)
@@ -17,7 +17,6 @@ class AuthController extends Controller
         $email = $request->email;
         $password = $request->password;
 
-        // Contoh validasi manual (sementara)
         if ($email === 'admin@gmail.com' && $password === '123456') {
             return redirect()->route('beranda');
         }
